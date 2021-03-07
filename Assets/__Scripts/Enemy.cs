@@ -3,12 +3,11 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-
+    //Fields with information on the enemy
     public float speed = 10.0f;
-    public float rateOfFire = 0.3f;
-    public float health = 100;
     protected BoundsCheck boundsCheck;
 
+    //Attribute for the position of the enemy object
     public Vector3 pos
     {
         get
@@ -21,13 +20,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Use this for initialization
+    //Initialize boundsCheck object
     void Start()
     {
         boundsCheck = gameObject.GetComponent<BoundsCheck>();
     }
 
-    // Update is called once per frame
+    //Call the move function and check boundaries, destroying the enemy object if it is out of bounds
     void Update()
     {
         Move();
@@ -42,6 +41,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Move downwards according to the enemy speed using the pos attribute
     public virtual void Move()
     {
         Vector3 temp = pos;
@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
         pos = temp;
     }
 
+    //Not required - if an enemy is hit by a hero projectile, destroy the enemy and the projectile
     private void OnCollisionEnter(Collision collision)
     {
         GameObject projectileObj = collision.gameObject;
@@ -56,10 +57,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(projectileObj);
             Destroy(gameObject);
-        }
-        else
-        {
-            print("Enemy hit by non-hero projectile: " + projectileObj.name);
         }
     }
 }
